@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Orbitron", sans-serif;
+  background: radial-gradient(circle at top, #0d0d0d 0%, #000000 100%);
+  color: white;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.casino-container {
+  text-align: center;
+}
+
+.neon-title {
+  font-size: 2.2rem;
+  color: #ff007f;
+  margin-bottom: 20px;
+  animation: flicker 1.5s infinite alternate;
+}
+
+@keyframes flicker {
+  0%,
+  19%,
+  21%,
+  23%,
+  25%,
+  54%,
+  56%,
+  100% {
+    opacity: 1;
+  }
+  20%,
+  24%,
+  55% {
+    opacity: 0.4;
+  }
+}
+
+.auth-card {
+  background: rgba(20, 20, 20, 0.9);
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 0 8px rgba(255, 0, 127, 0.6), 0 0 15px rgba(0, 255, 255, 0.4);
+  width: 320px;
+  margin: 0 auto;
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: #00ffff;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 1.2rem;
+}
+
+label {
+  font-size: 0.85rem;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
+  background: #1a1a1a;
+  color: white;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+input:focus {
+  box-shadow: inset 0 0 6px rgba(0, 255, 255, 0.6);
+}
+
+/* Кнопка форма */
+.neon-btn {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  background: #ff007f;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-sizing: border-box;
+}
+
+.neon-btn:hover {
+  background: #ff3399;
+  box-shadow: 0 0 10px #ff3399, 0 0 20px #ff66b2;
+}
+
+.toggle-text {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+
+.toggle-text a {
+  color: #00ffff;
+  text-decoration: none;
+}
+
+.toggle-text a:hover {
+  text-decoration: underline;
+}
+
+/* Обгортка для пароля + кнопка-око */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 0.85rem;
+  color: #ffffff;
+}
+
+.password-wrapper input[type="password"],
+.password-wrapper input[type="text"] {
+  width: 100%;
+  padding-right: 2.5rem;
+  box-sizing: border-box;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 0.6rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.3rem;
+  color: #ffffff;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  line-height: 1;
+}
+
+.toggle-password:hover {
+  color: #ff3399;
+}
