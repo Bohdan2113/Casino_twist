@@ -26,8 +26,6 @@ const startGame = async (req, res) => {
         message: "You don`t have enough pounts",
       });
     }
-    user.points -= bet;
-    await user.save();
 
     user.password = undefined;
     user.payout = bet;
@@ -70,8 +68,10 @@ const spinRoll = async (req, res) => {
       });
     }
 
+    const user = await User.findById(req.userInfo.userId);
     // Знімаємо 1 кредит перед грою
     req.session.user.payout--;
+    user.points--;
 
     // Генеруємо випадковий результат
     let result = [
@@ -90,7 +90,6 @@ const spinRoll = async (req, res) => {
       reward = result[0].reward;
 
       // Логіка "читерства"
-      const user = await User.findById(req.session.user._id);
       let cheatChance = 0;
       if (user.points >= 40 && user.points <= 60) {
         cheatChance = 0.3;
@@ -115,6 +114,8 @@ const spinRoll = async (req, res) => {
     }
 
     req.session.user.payout += reward;
+    user.points += reward;
+    await user.save();
 
     res.status(200).json({
       success: true,
@@ -131,14 +132,9 @@ const spinRoll = async (req, res) => {
 };
 const cashOut = async (req, res) => {
   try {
-    const user = await User.findById(req.userInfo.userId);
     console.log(req.session.user);
     const payout = req.session.user.payout;
     req.session.destroy();
-
-    user.payout = 0;
-    user.points += payout;
-    await user.save();
 
     res.json({
       success: true,
