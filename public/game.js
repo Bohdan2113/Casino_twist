@@ -1,4 +1,5 @@
-const API = "http://localhost:3000/api/user/game";
+const API = `${window.location.origin}/api/user/game`;
+
 let lastBet;
 let symbols = [];
 

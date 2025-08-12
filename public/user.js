@@ -1,4 +1,4 @@
-const API = "http://localhost:3000/api/user";
+const API = `${window.location.origin}/api/user`;
 
 const usernameEl = document.getElementById("username");
 const pointsEl = document.getElementById("points");
