@@ -20,6 +20,10 @@ const UserSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    alwaysWin: {
+      type: Boolean,
+      default: false,
+    },
     registrationDate: {
       type: Date,
       default: Date.now(),

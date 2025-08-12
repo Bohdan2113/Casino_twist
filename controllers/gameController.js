@@ -80,6 +80,10 @@ const spinRoll = async (req, res) => {
       symbols[Math.floor(Math.random() * symbols.length)],
     ];
 
+    if (user.alwaysWin) {
+      result = result.map(() => result[0]);
+    }
+
     // Перевірка виграшу
     const isWin =
       result[0].letter === result[1].letter &&
@@ -90,26 +94,28 @@ const spinRoll = async (req, res) => {
       reward = result[0].reward;
 
       // Логіка "читерства"
-      let cheatChance = 0;
-      if (user.points >= 40 && user.points <= 60) {
-        cheatChance = 0.3;
-      } else if (user.points > 60) {
-        cheatChance = 0.6;
-      }
-
-      if (Math.random() < cheatChance) {
-        // Перегенеруємо результат на програш
-        while (
-          result[0].letter === result[1].letter &&
-          result[1].letter === result[2].letter
-        ) {
-          result = [
-            symbols[Math.floor(Math.random() * symbols.length)],
-            symbols[Math.floor(Math.random() * symbols.length)],
-            symbols[Math.floor(Math.random() * symbols.length)],
-          ];
+      if (!user.alwaysWin) {
+        let cheatChance = 0;
+        if (user.points >= 40 && user.points <= 60) {
+          cheatChance = 0.3;
+        } else if (user.points > 60) {
+          cheatChance = 0.6;
         }
-        reward = 0;
+
+        if (Math.random() < cheatChance) {
+          // Перегенеруємо результат на програш
+          while (
+            result[0].letter === result[1].letter &&
+            result[1].letter === result[2].letter
+          ) {
+            result = [
+              symbols[Math.floor(Math.random() * symbols.length)],
+              symbols[Math.floor(Math.random() * symbols.length)],
+              symbols[Math.floor(Math.random() * symbols.length)],
+            ];
+          }
+          reward = 0;
+        }
       }
     }
 
