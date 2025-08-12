@@ -11,6 +11,15 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    points: {
+      type: Number,
+      default: 10,
+      min: 0,
+    },
+    payout: {
+      type: Number,
+      default: 0,
+    },
     registrationDate: {
       type: Date,
       default: Date.now(),

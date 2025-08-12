@@ -40,10 +40,16 @@ const registerUser = async (req, res) => {
       });
     }
     await newUser.save();
+    newUser.password = undefined;
+
+    // create user jwt
+    const accessToken = createJWT(newUser);
 
     res.status(201).json({
       success: true,
       message: "User registereed successfully.",
+      data: newUser,
+      accessToken,
     });
   } catch (err) {
     console.log(err);
@@ -74,9 +80,8 @@ const loginUser = async (req, res) => {
       });
     }
 
-    console.log(user);
     // if the password is correct or not
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
         success: false,
@@ -86,10 +91,12 @@ const loginUser = async (req, res) => {
 
     // create user jwt
     const accessToken = createJWT(user);
+    user.password = undefined;
 
     res.status(200).json({
       success: true,
       message: "Logged in successfully",
+      data: user,
       accessToken,
     });
   } catch (err) {
