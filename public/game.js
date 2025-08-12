@@ -1,7 +1,7 @@
 const API = `${window.location.origin}/api/user/game`;
 
 let lastBet;
-let symbols = [];
+let symbols;
 
 async function loadUserData() {
   try {
@@ -13,9 +13,6 @@ async function loadUserData() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to fetch user data");
-    }
 
     const userData = await res.json();
     if (!userData || !userData.success) {
@@ -39,9 +36,6 @@ async function loadSymbols() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to fetch symbols");
-    }
 
     const symbols = await res.json();
     if (!symbols || !symbols.success) {
@@ -57,6 +51,8 @@ async function loadSymbols() {
 }
 
 async function dispalyData() {
+  document.getElementById("rollBtn").disabled = true;
+
   lastBet = localStorage.getItem("lastBet");
   document.getElementById("credits").textContent = lastBet;
 
@@ -68,6 +64,7 @@ async function dispalyData() {
 
   symbols = await loadSymbols();
   if (!symbols) window.location.href = "user.html";
+  document.getElementById("rollBtn").disabled = false;
 }
 
 function startSpinning(slot) {
@@ -144,9 +141,6 @@ async function roll() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to roll");
-    }
 
     const data = await res.json();
     const slots = [
@@ -194,9 +188,6 @@ async function cashOut() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-    if (!res.ok) {
-      throw new Error("Failed to cashOut");
-    }
 
     const data = await res.json();
     if (!data || !data.success) {

@@ -6,7 +6,7 @@ const betInput = document.getElementById("bet");
 const betSection = document.querySelector(".bet-section");
 
 const MAX_BET = 100;
-const MIN_BET = 10;
+const MIN_BET = 1;
 
 async function loadUserData() {
   try {
@@ -18,10 +18,6 @@ async function loadUserData() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-
-    if (!res.ok) {
-      throw new Error("Failed to fetch user data");
-    }
 
     const userData = await res.json();
     if (!userData || !userData.success) {
@@ -46,9 +42,6 @@ async function startGame(bet) {
       },
       body: JSON.stringify({ bet }),
     });
-    if (!res.ok) {
-      throw new Error("Failed to start the game");
-    }
 
     const data = await res.json();
     if (!data || !data.success) {

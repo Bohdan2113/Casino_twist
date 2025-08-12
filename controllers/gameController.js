@@ -126,7 +126,7 @@ const spinRoll = async (req, res) => {
     console.log(err);
     res.status(500).json({
       success: false,
-      message: "Sme error occured while spinning",
+      message: "Some error occured while spinning",
     });
   }
 };
