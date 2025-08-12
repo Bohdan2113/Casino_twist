@@ -5,7 +5,7 @@ let symbols = [];
 
 async function loadUserData() {
   try {
-    const res = await fetch(`http://localhost:3000/api/user`, {
+    const res = await fetch(`${window.location.origin}/api/user`, {
       method: "GET",
       credentials: "include", // якщо є сесійні cookies
       headers: {
