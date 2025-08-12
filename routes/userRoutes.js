@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import {
   startGame,
   getSymbols,
@@ -19,9 +20,19 @@ router.post("/changepassword", changePassword);
 router.use(cors({ origin: "http://localhost:3000", credentials: true }));
 router.use(
   session({
-    secret: "supersecret",
+    secret: process.env.SESSION_SECRET || "yourSecretHere",
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+      ttl: 14 * 24 * 60 * 60, // 14 днів
+    }),
+    cookie: {
+      maxAge: 14 * 24 * 60 * 60 * 1000, // 14 днів в мс
+      secure: false,
+      httpOnly: true,
+    },
   })
 );
 
