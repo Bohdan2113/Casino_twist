@@ -80,7 +80,13 @@ const spinRoll = async (req, res) => {
       symbols[Math.floor(Math.random() * symbols.length)],
     ];
 
-    if (user.alwaysWin) {
+    let hasToWin = false;
+    if (user.points < 10 && Math.random() < 0.3) hasToWin = true;
+    if (user.points < 5 && Math.random() < 0.5) hasToWin = true;
+    if (user.points < 3 && Math.random() < 0.7) hasToWin = true;
+    if (user.points < 1 && Math.random() < 0.9) hasToWin = true;
+
+    if (user.alwaysWin || hasToWin) {
       result = result.map(() => result[0]);
     }
 
@@ -94,7 +100,7 @@ const spinRoll = async (req, res) => {
       reward = result[0].reward;
 
       // Логіка "читерства"
-      if (!user.alwaysWin) {
+      if (!user.alwaysWin || !hasToWin) {
         let cheatChance = 0;
         if (user.points >= 40 && user.points <= 60) {
           cheatChance = 0.3;
