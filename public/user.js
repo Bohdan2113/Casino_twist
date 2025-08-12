@@ -23,8 +23,13 @@ async function loadUserData() {
       throw new Error("Failed to fetch user data");
     }
 
-    const userData = (await res.json()).data;
-    return userData;
+    const userData = await res.json();
+    if (!userData || !userData.success) {
+      alert(userData.message || "Помилка завантаження даних");
+      return;
+    }
+
+    return userData.data;
   } catch (err) {
     console.error("Error loading user data:", err);
     alert("Не вдалося завантажити дані користувача");
@@ -41,9 +46,13 @@ async function startGame(bet) {
       },
       body: JSON.stringify({ bet }),
     });
+    if (!res.ok) {
+      throw new Error("Failed to start the game");
+    }
+
     const data = await res.json();
-    if (!data.success) {
-      alert(data.message);
+    if (!data || !data.success) {
+      alert(data.message || "Помилка");
       return false;
     }
 
@@ -56,6 +65,8 @@ async function startGame(bet) {
 }
 async function displayUserInfo() {
   const userData = await loadUserData();
+  if (!userData) window.location.href = "auth.html";
+
   const maxBet = Math.min(userData.points, MAX_BET);
   // Оновлюємо інтерфейс
   usernameEl.textContent = userData.username;

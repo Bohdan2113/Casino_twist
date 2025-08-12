@@ -132,7 +132,6 @@ const spinRoll = async (req, res) => {
 };
 const cashOut = async (req, res) => {
   try {
-    console.log(req.session.user);
     const payout = req.session.user.payout;
     req.session.destroy();
 

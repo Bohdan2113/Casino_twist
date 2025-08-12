@@ -13,13 +13,17 @@ async function loadUserData() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-
     if (!res.ok) {
       throw new Error("Failed to fetch user data");
     }
 
-    const userData = (await res.json()).data;
-    return userData;
+    const userData = await res.json();
+    if (!userData || !userData.success) {
+      alert(userData.message || "Помилка");
+      return;
+    }
+
+    return userData.data;
   } catch (err) {
     console.error("Error loading user data:", err);
     alert("Не вдалося завантажити дані користувача");
@@ -35,13 +39,17 @@ async function loadSymbols() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
-
     if (!res.ok) {
       throw new Error("Failed to fetch symbols");
     }
 
-    const symbols = (await res.json()).data;
-    return symbols;
+    const symbols = await res.json();
+    if (!symbols || !symbols.success) {
+      alert(symbols.message || "Помилка");
+      return;
+    }
+
+    return symbols.data;
   } catch (err) {
     console.error("Error loading user data:", err);
     alert("Не вдалося завантажити дані користувача");
@@ -53,10 +61,13 @@ async function dispalyData() {
   document.getElementById("credits").textContent = lastBet;
 
   const userData = await loadUserData();
+  if (!userData) window.location.href = "user.html";
+
   document.getElementById("username").textContent =
     userData.username || "Player";
 
   symbols = await loadSymbols();
+  if (!symbols) window.location.href = "user.html";
 }
 
 function startSpinning(slot) {
@@ -119,6 +130,7 @@ async function spinSlots() {
 async function roll() {
   try {
     document.getElementById("rollBtn").disabled = true;
+    document.getElementById("cashoutBtn").disabled = true;
     lastBet = Math.max(0, lastBet - 1);
     localStorage.setItem("lastBet", lastBet);
     document.getElementById("credits").textContent = lastBet;
@@ -132,6 +144,10 @@ async function roll() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
+    if (!res.ok) {
+      throw new Error("Failed to roll");
+    }
+
     const data = await res.json();
     const slots = [
       document.getElementById("slot1"),
@@ -139,12 +155,13 @@ async function roll() {
       document.getElementById("slot3"),
     ];
 
-    if (!data.success) {
-      alert(data.message);
+    if (!data || !data.success) {
+      alert(data.message || "Помилка");
       slots.forEach((slot) => {
         slot.classList.remove("spinning");
       });
       document.getElementById("rollBtn").disabled = false;
+      document.getElementById("cashoutBtn").disabled = false;
       return;
     }
 
@@ -158,6 +175,7 @@ async function roll() {
           document.getElementById("credits").textContent = data.payout;
           lastBet = data.payout;
           document.getElementById("rollBtn").disabled = false;
+          document.getElementById("cashoutBtn").disabled = false;
         }
       }, (i + 1) * 1000);
     });
@@ -176,12 +194,16 @@ async function cashOut() {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
       },
     });
+    if (!res.ok) {
+      throw new Error("Failed to cashOut");
+    }
+
     const data = await res.json();
-    if (data.success) {
+    if (!data || !data.success) {
+      alert(data.message || "Помилка");
+    } else {
       localStorage.setItem("payout", data.message);
       window.location.href = "/user.html";
-    } else {
-      alert(data.message);
     }
   } catch (err) {
     console.log(err);

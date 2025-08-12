@@ -81,10 +81,14 @@ loginFormDiv.querySelector("form").addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-    const data = await res.json();
-
     if (!res.ok) {
       msg.textContent = data.message || "Помилка при вході.";
+      return;
+    }
+
+    const data = await res.json();
+    if (!data || !data.success) {
+      alert(data.message || "Помилка входу");
       return;
     }
 
@@ -125,10 +129,14 @@ registerFormDiv.querySelector("form").addEventListener("submit", async (e) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, password }),
     });
-    const data = await res.json();
-
     if (!res.ok) {
       msg.textContent = data.message || "Помилка при реєстрації.";
+      return;
+    }
+
+    const data = await res.json();
+    if (!data || !data.success) {
+      alert(data.message || "Помилка");
       return;
     }
 
