@@ -115,7 +115,6 @@ input:focus {
   text-decoration: underline;
 }
 
-/* Обгортка для пароля + кнопка-око */
 .password-wrapper {
   position: relative;
 }

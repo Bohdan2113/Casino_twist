@@ -7,10 +7,10 @@ async function loadUserData() {
   try {
     const res = await fetch(`${window.location.origin}/api/user`, {
       method: "GET",
-      credentials: "include", // якщо є сесійні cookies
+      credentials: "include", 
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
       },
     });
 
@@ -30,10 +30,10 @@ async function loadSymbols() {
   try {
     const res = await fetch(`${API}/symbols`, {
       method: "GET",
-      credentials: "include", // якщо є сесійні cookies
+      credentials: "include", 
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
       },
     });
 
@@ -81,16 +81,15 @@ function startSpinning(slot) {
 
   function spinStep() {
     if (!slot.classList.contains("spinning")) {
-      // Клас знятий — припиняємо анімацію і фіксуємо позицію
       cancelAnimationFrame(animationId);
       container.style.transform = "translateY(0)";
       return;
     }
 
-    position -= 5; // рухаємо на 5px за кадр (регулюй швидкість)
+    position -= 5; 
 
     if (position <= -stepHeight * symbols.length) {
-      position = 0; // зациклюємо позицію (цикл)
+      position = 0; 
     }
 
     container.style.transform = `translateY(${position}px)`;
@@ -108,7 +107,6 @@ async function spinSlots() {
 
     container.innerHTML = "";
 
-    // Додаємо символи у вертикальний стовпчик (копії для циклу)
     for (let i = 0; i < symbols.length * 3; i++) {
       const span = document.createElement("span");
       span.textContent = symbols[i % symbols.length];
@@ -185,7 +183,7 @@ async function cashOut() {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
       },
     });
 

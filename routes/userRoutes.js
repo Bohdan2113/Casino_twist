@@ -26,10 +26,10 @@ router.use(
     store: MongoStore.create({
       mongoUrl: process.env.MONGO_URI,
       collectionName: "sessions",
-      ttl: 14 * 24 * 60 * 60, // 14 днів
+      ttl: 14 * 24 * 60 * 60,
     }),
     cookie: {
-      maxAge: 14 * 24 * 60 * 60 * 1000, // 14 днів в мс
+      maxAge: 14 * 24 * 60 * 60 * 1000,
       secure: false,
       httpOnly: true,
     },

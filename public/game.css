@@ -8,12 +8,11 @@ body {
   background-color: #1e1e1e;
   color: white;
   
-  /* Центруємо вікно */
   height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* вертикально */
-  align-items: center;     /* горизонтально */
+  justify-content: center; 
+  align-items: center;     
   padding: 1.25rem;
   text-align: center;
   font-size: 1rem;
@@ -45,7 +44,7 @@ p {
   display: flex;
   justify-content: center;
   margin: 1.5rem 0;
-  gap: 1rem; /* відстань між слотами */
+  gap: 1rem; 
 }
 
 .slot {
@@ -95,7 +94,6 @@ button:hover {
   box-shadow: 0 0 10px #ff3399, 0 0 20px #ff66b2;
 }
 
-/* Адаптивність для мобільних (екрани до 480px ширини) */
 @media (max-width: 480px) {
   .slot {
     width: 6rem;

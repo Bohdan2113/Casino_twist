@@ -1,6 +1,5 @@
 import User from "../models/User.js";
 
-// Символи і нагороди
 const symbols = [
   { letter: "🍒", reward: 10 },
   { letter: "🍋", reward: 20 },
@@ -69,11 +68,9 @@ const spinRoll = async (req, res) => {
     }
 
     const user = await User.findById(req.userInfo.userId);
-    // Знімаємо 1 кредит перед грою
     req.session.user.payout--;
     user.points--;
 
-    // Генеруємо випадковий результат
     let result = [
       symbols[Math.floor(Math.random() * symbols.length)],
       symbols[Math.floor(Math.random() * symbols.length)],
@@ -90,7 +87,6 @@ const spinRoll = async (req, res) => {
       result = result.map(() => result[0]);
     }
 
-    // Перевірка виграшу
     const isWin =
       result[0].letter === result[1].letter &&
       result[1].letter === result[2].letter;
@@ -99,7 +95,6 @@ const spinRoll = async (req, res) => {
     if (isWin) {
       reward = result[0].reward;
 
-      // Логіка "читерства"
       if (!user.alwaysWin || !hasToWin) {
         let cheatChance = 0;
         if (user.points >= 40 && user.points <= 60) {
@@ -109,7 +104,6 @@ const spinRoll = async (req, res) => {
         }
 
         if (Math.random() < cheatChance) {
-          // Перегенеруємо результат на програш
           while (
             result[0].letter === result[1].letter &&
             result[1].letter === result[2].letter

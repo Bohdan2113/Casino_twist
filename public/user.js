@@ -12,10 +12,10 @@ async function loadUserData() {
   try {
     const res = await fetch(`${API}`, {
       method: "GET",
-      credentials: "include", // якщо є сесійні cookies
+      credentials: "include", 
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
       },
     });
 
@@ -38,7 +38,7 @@ async function startGame(bet) {
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // якщо використовуєш JWT
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`, 
       },
       body: JSON.stringify({ bet }),
     });
