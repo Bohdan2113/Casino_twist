@@ -54,5 +54,30 @@ const changePassword = async (req, res) => {
     });
   }
 };
+const getMeInfo = async (req, res) => {
+  try {
+    const userId = req.userInfo.userId;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "Couldn't get user info",
+      });
+    }
 
-export { changePassword };
+    user.password = undefined;
+    res.status(200).json({
+      success: true,
+      data: user,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      success: false,
+      message: "Some error occured while getting user info",
+    });
+  }
+};
+
+
+export { changePassword, getMeInfo };

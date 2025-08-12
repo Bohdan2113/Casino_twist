@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Casino - User Panel</title>
+    <link rel="stylesheet" href="user.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <button class="signout-btn" id="signOutBtn">Sign Out</button>
+
+    <div class="casino-container">
+      <h1 class="neon-title">🎰 Welcome, <span id="username">Player</span>!</h1>
+
+      <div class="user-card">
+        <div class="user-info">
+          <p><strong>Points:</strong> <span id="points">100</span></p>
+        </div>
+
+        <div
+          class="bet-section"
+          title="Мінімальна ставка: 10, Максимальна ставка: "
+        >
+          <label for="bet">Place your bet:</label>
+          <input type="number" id="bet" min="10" max="100" value="10" />
+        </div>
+
+        <button class="neon-btn" id="startGameBtn">Start Game</button>
+      </div>
+    </div>
+
+    <script src="user.js"></script>
+  </body>
+</html>
