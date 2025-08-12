@@ -2,10 +2,10 @@ import User from "../models/User.js";
 
 // Символи і нагороди
 const symbols = [
-  { letter: "🍋", reward: 10 },
-  { letter: "🍒", reward: 20 },
-  { letter: "🍀", reward: 30 },
-  { letter: "7", reward: 40 },
+  { letter: "🍒", reward: 10 },
+  { letter: "🍋", reward: 20 },
+  { letter: "🍊", reward: 30 },
+  { letter: "🍉", reward: 40 },
 ];
 
 const startGame = async (req, res) => {

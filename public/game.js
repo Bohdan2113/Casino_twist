@@ -137,7 +137,7 @@ async function roll() {
       document.getElementById("slot2"),
       document.getElementById("slot3"),
     ];
-    
+
     if (!data.success) {
       alert(data.message);
       slots.forEach((slot) => {
@@ -155,6 +155,7 @@ async function roll() {
 
         if (i === 2) {
           document.getElementById("credits").textContent = data.payout;
+          lastBet = data.payout;
           document.getElementById("rollBtn").disabled = false;
         }
       }, (i + 1) * 1000);
